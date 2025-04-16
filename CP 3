@@ -1,0 +1,45 @@
+class DoublyNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class DLL:
+    def __init__(self):
+        self.head = None
+
+    # Insert at beginning
+    def insert_at_beginning(self, data):
+        new_node = DoublyNode(data)
+        if self.head is not None:
+            new_node.next = self.head
+            self.head.prev = new_node
+        self.head = new_node  # Always update head
+
+    # Insert at end
+    def insert_at_end(self, data):
+        new_node = DoublyNode(data)
+        if self.head is None:
+            self.head = new_node
+            return
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = new_node
+        new_node.prev = current
+
+    # Delete a node
+    def delete_node(self, key):
+        current = self.head
+        while current:
+            if current.data == key:
+                if current.prev:
+                    current.prev.next = current.next
+                if current.next:
+                    current.next.prev = current.prev
+                if current == self.head:  # If deleting head node
+                    self.head = current.next
+                del current  # Free memory
+                return
+            current = current.next
+        print(f"Node with value
